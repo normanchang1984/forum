@@ -1,0 +1,32 @@
+<h1>Welcome to the Alpha Camp Blog</h1>
+<br>
+<table class="table">
+
+  <%@forums.each do |e|%>
+  <tr>
+    <td>
+      <%=e.topic%>
+    </td>
+    <td>
+      <%=link_to "Show", forum_path(e), :class=>"btn btn-primary"%>
+    </td>
+    <td>
+      <%=link_to "Edit", edit_forum_path(e), :class=>"btn btn-primary"%>
+    </td>
+    <td>
+      <%=link_to "Destroy", forum_path(e), :method=>:delete, :class=>"btn btn-primary"%>
+    </td>
+  </tr>
+  <%end%>
+</table>
+
+<br>
+<%=form_for @forum, :url=>forums_path, :class=>"form" do |f|%>
+<%=f.label :topic, "Topic"%>
+<%=f.text_field :topic, :class=>"form-control"%>
+<%=f.label :body, "Content"%>
+<%=f.text_area :body, :class=>"form-control"%>
+<%=f.submit "Create"%>
+<%end%>
+
+

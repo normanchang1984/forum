@@ -1,0 +1,9 @@
+<h2>Editing Page</h2>
+
+<%=form_for @forum, :url=>forum_path(@forum), :method=>:patch, :class=>"form" do |f|%>
+<%=f.label :topic, "Topic"%>
+<%=f.text_field :topic, :class=>"form-control"%>
+<%=f.label :body, "Content"%>
+<%=f.text_area :body, :class=>"form-control"%>
+<%=f.submit "Update"%>
+<%end%>
