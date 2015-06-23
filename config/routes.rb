@@ -2,10 +2,11 @@ Rails.application.routes.draw do
 
 
 resources :forums do
-  resource :post
+  resource :post, :controller=>:forum_posts
 end
 
 resources :users
+
 
 
 

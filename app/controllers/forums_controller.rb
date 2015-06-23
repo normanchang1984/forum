@@ -1,5 +1,5 @@
 class ForumsController < ApplicationController
-  before_action :find_post, :only=>[:update, :destroy]
+  before_action :find_forum, :only=>[:update, :destroy]
 
   def index
 
@@ -41,13 +41,24 @@ class ForumsController < ApplicationController
   end
 
   def show
-    @forum=Forum.find(params[:id])
+
+    if params[:update].to_i==1
+
+      @forum=Forum.find(params[:id])
+      @post=Post.find(params[:p_id])
+    else
+      @forum=Forum.find(params[:id])
+      @post=Post.new
+    end
+    @posts=@forum.posts
+    #Rails.logger.debug("******************")
+    #Rails.logger.debug(@post.inspect)
   end
 
 
   protected
 
-  def find_post
+  def find_forum
     @forum=Forum.find(params[:id])
   end
 

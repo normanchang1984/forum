@@ -1,9 +1,42 @@
-<h1>Welcome to the Alpha Camp Blog</h1>
+<h1>Welcome to the Raising Stars Blog</h1>
 <br>
-<h3><%=@forum.topic%></h3>
+<h2><%=@forum.topic%></h2>
 <br>
-<h5><%=@forum.body%></h5>
+<h3><%=@forum.body%></h3>
 <br>
 <br>
 
 
+<table class="table">
+
+<%@posts.each do |g|%>
+<tr>
+  <td>
+      <h4><%=g.content%></h4>
+  </td>
+  <td>
+    <%=link_to "Update", edit_forum_post_path(@forum, :p_id=>g.id, :update=>1), :class=>"btn btn-primary"%>
+    <%=link_to "Destroy", forum_post_path(@forum, :p_id=>g.id), :method=>:delete, :class=>"btn btn-danger"%>
+  </td>
+</tr>
+<%end%>
+</table>
+
+
+
+<br>
+
+<br>
+<%if params[:update].to_i==1%>
+  <h2>Update Comments</h2>
+  <%=form_for @post, :url=>forum_post_path(@forum, :p_id=>params[:p_id]), :class=>"form" do |p|%>
+  <%=p.text_area :content, :class=>"form-control"%>
+  <%=p.submit "Update"%>
+  <%end%>
+<%else%>
+  <h2>New Comment</h2>
+  <%=form_for @post, :url=>forum_post_path(@forum), :class=>"form" do |p|%>
+  <%=p.text_area :content, :class=>"form-control"%>
+  <%=p.submit "Create"%>
+  <%end%>
+<%end%>
