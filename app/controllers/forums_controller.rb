@@ -67,6 +67,13 @@ class ForumsController < ApplicationController
     @posts=Post.all
   end
 
+  def profile
+    @user=User.find(params[:user_id])
+    @post=Post.where(:user_id=>params[:user_id])
+
+  end
+
+
   protected
 
   def find_forum

@@ -6,6 +6,7 @@ resources :forums do
   resource :post, :controller=>:forum_posts
   collection do
     get :latest
+    get :profile
   end
 end
 
