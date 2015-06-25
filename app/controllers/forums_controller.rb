@@ -8,6 +8,7 @@ class ForumsController < ApplicationController
     @forums = Forum.all
     @forums = params[:order] ? @forums.order("#{params[:order]} DESC") : @forums.order("created_at ASC")
     @forum = Forum.new
+    @authors=User.all
 
   end
 
@@ -74,7 +75,7 @@ class ForumsController < ApplicationController
 
   def forum_params
 
-    params.require(:forum).permit(:topic, :body, :category_ids=>[])
+    params.require(:forum).permit(:topic, :body, :user_id, :category_ids=>[])
 
   end
 
