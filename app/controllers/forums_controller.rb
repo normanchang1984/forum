@@ -1,4 +1,6 @@
 class ForumsController < ApplicationController
+
+  before_action :authenticate_user!, :except=>[:index]
   before_action :find_forum, :only=>[:update, :destroy]
 
   def index
@@ -9,6 +11,8 @@ class ForumsController < ApplicationController
   end
 
   def create
+    #Rails.logger.debug("******************")
+    #Rails.logger.debug(params.inspect)
     @forum=Forum.new(forum_params)
     if @forum.save
       flash[:notice]="Create Succeeded"
@@ -64,7 +68,7 @@ class ForumsController < ApplicationController
 
   def forum_params
 
-    params.require(:forum).permit(:topic, :body)
+    params.require(:forum).permit(:topic, :body, :category_ids=>[])
 
   end
 

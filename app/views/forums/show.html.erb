@@ -1,14 +1,31 @@
 <h1>Welcome to the Raising Stars Blog</h1>
 <br>
+<span>Topic:</span>
+<br>
 <h2><%=@forum.topic%></h2>
+<br>
+<span>Content:</span>
 <br>
 <h3><%=@forum.body%></h3>
 <br>
 <br>
-
-
+<%if params[:update].to_i==1%>
+  <%=link_to "Back to Main", forums_path, :class=>"btn btn-primary"%>
+  <%=link_to "Quit Edit", forum_path(@forum), :class=>"btn btn-primary"%>
+<%else%>
+  <%=link_to "Back to Main", forums_path, :class=>"btn btn-primary"%>
+<%end%>
+<br>
+<br>
 <table class="table">
-
+<tr>
+  <th>
+    <p>Comments</p>
+  </th>
+  <th>
+    <p>Actions</p>
+  </th>
+</tr>
 <%@posts.each do |g|%>
 <tr>
   <td>
@@ -16,7 +33,7 @@
   </td>
   <td>
     <%=link_to "Update", edit_forum_post_path(@forum, :p_id=>g.id, :update=>1), :class=>"btn btn-primary"%>
-    <%=link_to "Destroy", forum_post_path(@forum, :p_id=>g.id), :method=>:delete, :class=>"btn btn-danger"%>
+    <%=link_to "Delete", forum_post_path(@forum, :p_id=>g.id), :method=>:delete, :class=>"btn btn-danger"%>
   </td>
 </tr>
 <%end%>

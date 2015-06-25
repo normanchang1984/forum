@@ -1,31 +1,60 @@
-<h1>Welcome to the Alpha Camp Blog</h1>
+<h1>Welcome to the Raising Stars Blog</h1>
 <br>
 <table class="table">
-
+  <tr>
+    <th>Topic</th>
+    <th>Created Time</th>
+    <th>Updated Time</th>
+    <th># of Posts</th>
+    <th>Category</th>
+    <th>Actions</th>
+  </tr>
   <%@forums.each do |e|%>
   <tr>
     <td>
       <%=e.topic%>
     </td>
     <td>
+      <%=e.created_at%>
+    </td>
+    <td>
+      <%=e.updated_at%>
+    </td>
+    <td>
+      <%=e.posts.count%>
+    </td>
+    <td>
+      <%@categories=e.categories%>
+      <%@categories.each do |x|%>
+        <%=x.name%>
+      <%end%>
+    </td>
+    <td>
       <%=link_to "Show", forum_path(e), :class=>"btn btn-primary"%>
-    </td>
-    <td>
       <%=link_to "Edit", edit_forum_path(e), :class=>"btn btn-primary"%>
-    </td>
-    <td>
       <%=link_to "Destroy", forum_path(e), :method=>:delete, :class=>"btn btn-primary"%>
     </td>
   </tr>
   <%end%>
 </table>
 
+<p>Create a new blog</p>
 <br>
 <%=form_for @forum, :url=>forums_path, :class=>"form" do |f|%>
 <%=f.label :topic, "Topic"%>
 <%=f.text_field :topic, :class=>"form-control"%>
 <%=f.label :body, "Content"%>
 <%=f.text_area :body, :class=>"form-control"%>
+<div class="form-group">
+<%#= f.label :category_id, "Category" %>
+<%#= f.select :category_id, [["Basketball", 1], ["Baseball", 2], ["Tennis", 3]], :class=>"form-control" %>
+<%= f.collection_check_boxes(:category_ids, Category.all, :position, :name)%>
+<%#= f.collection_select :category_id, Category.all, :id, :name, :class => "form-control", :prompt => "Please select"%>
+
+<%#Category.all.each do |c|%>
+  <%#= f.radio_button :category_id, c.id%> <%#=c.name%>
+<%#end%>
+</div>
 <%=f.submit "Create"%>
 <%end%>
 

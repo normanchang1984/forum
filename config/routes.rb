@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
 
 
+devise_for :users
 resources :forums do
   resource :post, :controller=>:forum_posts
 end
 
-resources :users
+root :to=>"forums#index"
 
 
 
