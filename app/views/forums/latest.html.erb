@@ -1,0 +1,19 @@
+<h1>About the Blog</h1>
+<br>
+<br>
+<%=link_to "Back to Main", forums_path, :class=>"btn btn-primary"%>
+<br>
+<br>
+<br>
+<table class="table">
+  <tr>
+    <th>Number of Users</th>
+    <th>Number of Topics</th>
+    <th>Number of Posts</th>
+  </tr>
+  <tr>
+    <th><%=@users.count%></th>
+    <th><%=@forums.count%></th>
+    <th><%=@posts.count%></th>
+  </tr>
+</table>

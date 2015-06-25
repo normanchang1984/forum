@@ -1,8 +1,9 @@
 <h1>Welcome to the Raising Stars Blog</h1>
 <br>
 <br>
-<%=link_to "Sort By Time", {}, :class=>"btn btn-primary", :order=>"created_at"%>
-<%=link_to "Sort By Replies",{}, :class=>"btn btn-primary", :order=>"posts_count"%>
+<%=link_to "About", latest_forums_path, :class=>"btn btn-primary"%>
+<%=link_to "Sort By Time", {}, :class=>"btn btn-default", :order=>"created_at"%>
+<%=link_to "Sort By Replies",{}, :class=>"btn btn-default", :order=>"posts_count"%>
 <br>
 <br>
 <table class="table">

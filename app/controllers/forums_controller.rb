@@ -60,6 +60,11 @@ class ForumsController < ApplicationController
     #Rails.logger.debug(@post.inspect)
   end
 
+  def latest
+    @forums = Forum.all
+    @users = User.all
+    @posts=Post.all
+  end
 
   protected
 

@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 devise_for :users
 resources :forums do
   resource :post, :controller=>:forum_posts
+  collection do
+    get :latest
+  end
 end
 
 root :to=>"forums#index"
