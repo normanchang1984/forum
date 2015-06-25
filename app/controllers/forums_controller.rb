@@ -5,9 +5,10 @@ class ForumsController < ApplicationController
 
   def index
 
-    @forums=Forum.all
+    @forums = Forum.all
+    @forums = params[:order] ? @forums.order("#{params[:order]} DESC") : @forums.order("created_at ASC")
+    @forum = Forum.new
 
-    @forum=Forum.new
   end
 
   def create
