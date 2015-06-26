@@ -13,9 +13,11 @@ class ForumsController < ApplicationController
   end
 
   def create
-    #Rails.logger.debug("******************")
+    #Rails.logger.debug("***************************")
     #Rails.logger.debug(params.inspect)
     @forum=Forum.new(forum_params)
+    @forum.view_count=0
+    @forum.user_id=current_user.id
     if @forum.save
       flash[:notice]="Create Succeeded"
       redirect_to forums_path
@@ -57,6 +59,12 @@ class ForumsController < ApplicationController
       @post=Post.new
     end
     @posts=@forum.posts
+    if @forum.view_count.nil?
+      @forum.view_count=1
+    else
+      @forum.view_count+=1
+    end
+    @forum.update_attributes(:view_count=>@forum.view_count)
     #Rails.logger.debug("******************")
     #Rails.logger.debug(@post.inspect)
   end
@@ -68,7 +76,7 @@ class ForumsController < ApplicationController
   end
 
   def profile
-    @user=User.find(params[:user_id])
+    @user=User.find_by_id(params[:user_id])
     @post=Post.where(:user_id=>params[:user_id])
 
   end
@@ -82,7 +90,7 @@ class ForumsController < ApplicationController
 
   def forum_params
 
-    params.require(:forum).permit(:topic, :body, :user_id, :category_ids=>[])
+    params.require(:forum).permit(:topic, :body, :user_id, :view_count, :category_ids=>[])
 
   end
 

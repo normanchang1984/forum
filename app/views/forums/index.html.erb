@@ -12,6 +12,7 @@
     <th>Author</th>
     <th>Created Time</th>
     <th>Updated Time</th>
+    <th># of Views</th>
     <th># of Posts</th>
     <th>Category</th>
     <th>Actions</th>
@@ -33,6 +34,9 @@
     </td>
     <td>
       <%=e.updated_at%>
+    </td>
+    <td>
+      <%=e.view_count%>
     </td>
     <td>
       <%=e.posts.count%>

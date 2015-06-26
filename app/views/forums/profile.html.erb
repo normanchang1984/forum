@@ -6,11 +6,26 @@
 <br>
 <%=@user.last_name%>
 <br>
-<%@user.forums.each do |u|%>
-<%=u.topic%>
-<%end%>
+<table class="table">
+  <tr>
+    <th>Topics</th>
+  </tr>
+  <%@user.forums.each do |u|%>
+  <tr>
+    <td><%=u.topic%></td>
+  </tr>
+  <%end%>
+</table>
 <br>
-<%@post.each do |p|%>
-<%=p.content%>
-<%end%>
+<br>
+<table class="table">
+  <tr>
+    <th>Comments</th>
+  </tr>
+  <%@post.each do |p|%>
+  <tr>
+    <td><%=p.content%></td>
+  </tr>
+  <%end%>
+</table>
 
