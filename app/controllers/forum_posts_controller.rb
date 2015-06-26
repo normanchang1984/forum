@@ -5,6 +5,7 @@ before_action :find_post, :only=>[:destroy, :create, :edit, :update]
 def create
 
   @post=@forum.posts.build(post_params)
+  @post.user_id=current_user.id
   if @post.save
     flash[:notice]="Create Succeeded"
     redirect_to forum_path(@forum)

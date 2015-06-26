@@ -49,8 +49,10 @@
     </td>
     <td>
       <%=link_to "Show", forum_path(e), :class=>"btn btn-primary"%>
-      <%=link_to "Edit", edit_forum_path(e), :class=>"btn btn-primary"%>
-      <%=link_to "Destroy", forum_path(e), :method=>:delete, :class=>"btn btn-primary"%>
+      <%if current_user.id==e.user_id%>
+        <%=link_to "Edit", edit_forum_path(e), :class=>"btn btn-primary"%>
+        <%=link_to "Destroy", forum_path(e), :method=>:delete, :class=>"btn btn-primary"%>
+      <%end%>
     </td>
   </tr>
   <%end%>
