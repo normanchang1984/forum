@@ -65,6 +65,11 @@ class ForumsController < ApplicationController
       @forum.view_count+=1
     end
     @forum.update_attributes(:view_count=>@forum.view_count)
+
+    if params[:fav].to_i==1
+      @fav=Userforumship.new(:user_id=>current_user.id, :forum_id=>@forum.id)
+      @fav.save
+    end
     #Rails.logger.debug("******************")
     #Rails.logger.debug(@post.inspect)
   end
@@ -78,6 +83,7 @@ class ForumsController < ApplicationController
   def profile
     @user=User.find_by_id(params[:user_id])
     @post=Post.where(:user_id=>params[:user_id])
+    @forums=Forum.all
 
   end
 

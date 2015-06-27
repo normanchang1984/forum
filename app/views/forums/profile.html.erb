@@ -28,4 +28,16 @@
   </tr>
   <%end%>
 </table>
+<br>
+<br>
+<table class="table">
+  <tr>
+    <th>Favorite Forums</th>
+  </tr>
+  <%@user.favorites.each do |k|%>
+  <tr>
+    <td><%=k.topic%></td>
+  </tr>
+  <%end%>
+</table>
 

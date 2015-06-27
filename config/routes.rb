@@ -10,6 +10,7 @@ resources :forums do
   end
 end
 
+
 root :to=>"forums#index"
 
 

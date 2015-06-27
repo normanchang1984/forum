@@ -15,6 +15,8 @@
 <%else%>
   <%=link_to "Back to Main", forums_path, :class=>"btn btn-primary"%>
 <%end%>
+<%=link_to "Fav", forum_path(@forum, :fav=>1), :class=>"btn btn-primary"%>
+
 <br>
 <br>
 <table class="table">
@@ -36,6 +38,7 @@
       <%=link_to "Update", edit_forum_post_path(@forum, :p_id=>g.id, :update=>1), :class=>"btn btn-primary"%>
       <%=link_to "Delete", forum_post_path(@forum, :p_id=>g.id), :method=>:delete, :class=>"btn btn-danger"%>
     <%end%>
+
   </td>
 </tr>
 <%end%>
