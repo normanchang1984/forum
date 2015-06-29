@@ -70,8 +70,7 @@ class ForumsController < ApplicationController
       @fav=Userforumship.new(:user_id=>current_user.id, :forum_id=>@forum.id)
       @fav.save
     end
-    #Rails.logger.debug("******************")
-    #Rails.logger.debug(@post.inspect)
+
   end
 
   def latest
