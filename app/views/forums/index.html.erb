@@ -2,8 +2,8 @@
 <br>
 <br>
 <%=link_to "About", latest_forums_path, :class=>"btn btn-primary"%>
-<%=link_to "Sort By Time", {}, :class=>"btn btn-default", :order=>"created_at"%>
-<%=link_to "Sort By Replies",{}, :class=>"btn btn-default", :order=>"posts_count"%>
+<%=link_to "Sort By Time", forums_path(:order=>"created_at"), :class=>"btn btn-default"%>
+<%=link_to "Sort By Replies", forums_path(:order=>"posts_count"), :class=>"btn btn-default" %>
 <br>
 <br>
 <table class="table">
