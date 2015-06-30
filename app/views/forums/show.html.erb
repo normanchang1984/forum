@@ -9,13 +9,19 @@
 <h3><%=@forum.body%></h3>
 <br>
 <br>
-<%if params[:update].to_i==1%>
+<%if params[:p_id] %>
   <%=link_to "Back to Main", forums_path, :class=>"btn btn-primary"%>
   <%=link_to "Quit Edit", forum_path(@forum), :class=>"btn btn-primary"%>
 <%else%>
   <%=link_to "Back to Main", forums_path, :class=>"btn btn-primary"%>
 <%end%>
-<%=link_to "Fav", forum_path(@forum, :fav=>1), :class=>"btn btn-primary"%>
+
+
+<% if @fav %>
+  <%= link_to "Remove Fav", remove_favorite_forum_path(@forum), :method => :post, :class=>"btn btn-primary"%>
+<% else %>
+  <%= link_to "Fav", add_favorite_forum_path(@forum), :method => :post, :class=>"btn btn-primary"%>
+<% end %>
 
 <br>
 <br>
@@ -34,30 +40,28 @@
       <h4><%=g.content%></h4>
   </td>
   <td>
-    <%if current_user.id==g.user_id%>
-      <%=link_to "Update", edit_forum_post_path(@forum, :p_id=>g.id, :update=>1), :class=>"btn btn-primary"%>
-      <%=link_to "Delete", forum_post_path(@forum, :p_id=>g.id), :method=>:delete, :class=>"btn btn-danger"%>
+    <%if current_user == g.user %>
+      <%=link_to "Update", forum_path(@forum, :p_id=>g.id), :class=>"btn btn-primary"%>
+      <%=link_to "Delete", forum_post_path(@forum, g), :method=>:delete, :class=>"btn btn-danger"%>
     <%end%>
-
   </td>
 </tr>
 <%end%>
 </table>
 
 
-
 <br>
 
 <br>
-<%if params[:update].to_i==1%>
+<% if params[:p_id] %>
   <h2>Update Comments</h2>
-  <%=form_for @post, :url=>forum_post_path(@forum, :p_id=>params[:p_id]), :class=>"form" do |p|%>
+  <%=form_for @post, :url => forum_post_path(@forum, @post), :class=>"form" do |p|%>
   <%=p.text_area :content, :class=>"form-control"%>
   <%=p.submit "Update"%>
   <%end%>
 <%else%>
   <h2>New Comment</h2>
-  <%=form_for @post, :url=>forum_post_path(@forum), :class=>"form" do |p|%>
+  <%=form_for @post, :url => forum_posts_path(@forum), :class=>"form" do |p|%>
   <%=p.text_area :content, :class=>"form-control"%>
   <%=p.submit "Create"%>
   <%end%>

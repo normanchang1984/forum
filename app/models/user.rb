@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :forums
-  has_many :userforumships
+
+  has_many :userforumships, :dependent => :destroy
   has_many :favorites, :through=>:userforumships, :source=>:forum
+  has_many :posts
+
 end

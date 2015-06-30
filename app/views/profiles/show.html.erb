@@ -26,7 +26,7 @@
   <tr>
     <th>Comments</th>
   </tr>
-  <%@post.each do |p|%>
+  <% @posts.each do |p|%>
   <tr>
     <td><%=p.content%></td>
   </tr>
@@ -40,7 +40,7 @@
   </tr>
   <%@user.favorites.each do |k|%>
   <tr>
-    <td><%=k.topic%></td>
+    <td><%= link_to k.topic, forum_path(k) %></td>
   </tr>
   <%end%>
 </table>

@@ -1,19 +1,24 @@
 Rails.application.routes.draw do
 
 
-devise_for :users
-resources :forums do
-  resource :post, :controller=>:forum_posts
-  collection do
-    get :latest
-    get :profile
+  devise_for :users
+
+  resources :profiles, :only => :show
+
+  resources :forums do
+    resources :posts, :controller => :forum_posts
+
+    member do
+      post :add_favorite
+      post :remove_favorite
+    end
+
+    collection do
+      get :latest
+    end
   end
-end
 
-
-root :to=>"forums#index"
-
-
+  root :to=>"forums#index"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

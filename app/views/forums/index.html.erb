@@ -15,6 +15,7 @@
     <th># of Views</th>
     <th># of Posts</th>
     <th>Category</th>
+    <th>Participants</th>
     <th>Actions</th>
   </tr>
 
@@ -26,30 +27,32 @@
     <td>
       <%#=@author=@authors.find(params[e.user_id])%>
       <%#=User.find(e.user_id).email%>
-      <%=link_to "#{e.user.first_name}", profile_forums_path(:user_id=>e.user_id) %>
+      <%=link_to "#{e.user.first_name}", profile_path(e.user) %>
       <%#=e.inspect%>
     </td>
     <td>
-      <%=e.created_at%>
+      <%=e.created_at.to_s(:short)%>
     </td>
     <td>
-      <%=e.updated_at%>
+      <%=e.updated_at.to_s(:short)%>
     </td>
     <td>
       <%=e.view_count%>
     </td>
     <td>
-      <%=e.posts.count%>
+      <%=e.posts_count%>
     </td>
     <td>
-      <%@categories=e.categories%>
-      <%@categories.each do |x|%>
-        <%=x.name%>
-      <%end%>
+      <%=e.category_list%>
+
+    </td>
+    <td>
+      <%=e.name_list%>
+
     </td>
     <td>
       <%=link_to "Show", forum_path(e), :class=>"btn btn-primary"%>
-      <%if current_user and current_user.id==e.user_id%>
+      <% if current_user and current_user == e.user %>
         <%=link_to "Edit", edit_forum_path(e), :class=>"btn btn-primary"%>
         <%=link_to "Destroy", forum_path(e), :method=>:delete, :class=>"btn btn-primary"%>
       <%end%>
@@ -57,6 +60,8 @@
   </tr>
   <%end%>
 </table>
+
+<%= paginate @forums %>
 
 <p>Create a new blog</p>
 <br>

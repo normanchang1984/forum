@@ -1,23 +1,27 @@
 class ForumsController < ApplicationController
 
   before_action :authenticate_user!, :except=>[:index]
-  before_action :find_forum, :only=>[:update, :destroy]
+  before_action :find_forum, :only=>[:edit, :update, :destroy]
 
   def index
-
     @forums = Forum.all
-    @forums = params[:order] ? @forums.order("#{params[:order]} DESC") : @forums.order("created_at ASC")
+
+     if params[:order] == 'posts_count'
+      order_by = "posts_count DESC"
+    else
+      order_by = "id DESC"
+    end
+
+    @forums = @forums.order(order_by)
+    @forums = @forums.page(params[:page]).per(5)
     @forum = Forum.new
-    @authors=User.all
 
   end
 
   def create
-    #Rails.logger.debug("***************************")
-    #Rails.logger.debug(params.inspect)
-    @forum=Forum.new(forum_params)
-    @forum.view_count=0
-    @forum.user_id=current_user.id
+    @forum = Forum.new(forum_params)
+    @forum.user = current_user
+
     if @forum.save
       flash[:notice]="Create Succeeded"
       redirect_to forums_path
@@ -28,8 +32,7 @@ class ForumsController < ApplicationController
   end
 
   def update
-    @forum=Forum.update(params[:id],forum_params)
-    if @forum.save
+    if @forum.update(forum_params)
       flash[:notice]="Update Succeeded"
       redirect_to forums_path
     else
@@ -45,58 +48,57 @@ class ForumsController < ApplicationController
   end
 
   def edit
-    @forum=Forum.find(params[:id])
   end
 
   def show
 
-    if params[:update].to_i==1
+    @forum = Forum.find(params[:id])
+    @fav = current_user.userforumships.find_by_forum_id( params[:id] )
 
-      @forum=Forum.find(params[:id])
-      @post=Post.find(params[:p_id])
+    if params[:p_id]
+      @post = Post.find(params[:p_id])
     else
-      @forum=Forum.find(params[:id])
-      @post=Post.new
+      @post = Post.new
     end
+
     @posts=@forum.posts
-    if @forum.view_count.nil?
-      @forum.view_count=1
-    else
-      @forum.view_count+=1
-    end
-    @forum.update_attributes(:view_count=>@forum.view_count)
 
-    if params[:fav].to_i==1
-      @fav=Userforumship.new(:user_id=>current_user.id, :forum_id=>@forum.id)
-      @fav.save
+    @forum.increment!(:view_count)
+
+  end
+
+  def add_favorite
+    @fav = current_user.userforumships.find_by_forum_id( params[:id] )
+    unless @fav
+      current_user.userforumships.create( :forum_id => params[:id] )
     end
 
+    redirect_to :back
+  end
+
+  def remove_favorite
+    @fav = current_user.userforumships.find_by_forum_id( params[:id] )
+    @fav.destroy
+
+    redirect_to :back
   end
 
   def latest
     @forums = Forum.all
     @users = User.all
-    @posts=Post.all
+    @posts= Post.all
   end
 
-  def profile
-    @user=User.find_by_id(params[:user_id])
-    @post=Post.where(:user_id=>params[:user_id])
-    @forums=Forum.all
-
-  end
 
 
   protected
 
   def find_forum
-    @forum=Forum.find(params[:id])
+    @forum = current_user.forums.find(params[:id])
   end
 
   def forum_params
-
     params.require(:forum).permit(:topic, :body, :user_id, :view_count, :category_ids=>[])
-
   end
 
 end
