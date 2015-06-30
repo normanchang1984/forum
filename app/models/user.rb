@@ -8,5 +8,7 @@ class User < ActiveRecord::Base
   has_many :userforumships, :dependent => :destroy
   has_many :favorites, :through=>:userforumships, :source=>:forum
   has_many :posts
+  include Gravtastic
+  gravtastic
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629064105) do
+ActiveRecord::Schema.define(version: 20150630082149) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20150629064105) do
     t.integer  "category_id"
     t.integer  "posts_count"
     t.integer  "view_count",  default: 0
+    t.integer  "status"
   end
 
   create_table "posts", force: :cascade do |t|

@@ -74,6 +74,8 @@
 <%#= f.label :category_id, "Category" %>
 <%#= f.select :category_id, [["Basketball", 1], ["Baseball", 2], ["Tennis", 3]], :class=>"form-control" %>
 <%= f.collection_check_boxes(:category_ids, Category.all, :position, :name)%>
+<br>
+<%= f.select :status, [["Draft",0],["Publish",1]], :class=>"form-control"%>
 <%#= f.collection_select :category_id, Category.all, :id, :name, :class => "form-control", :prompt => "Please select"%>
 
 <%#Category.all.each do |c|%>

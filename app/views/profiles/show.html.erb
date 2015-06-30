@@ -10,6 +10,11 @@
 <%=@user.selfintro%>
 <br>
 <br>
+<h4>
+<%= image_tag @user.gravatar_url %>
+</h4>
+<br>
+<br>
 <table class="table">
   <tr>
     <th>Topics</th>
@@ -44,4 +49,22 @@
   </tr>
   <%end%>
 </table>
+<br>
+<br>
+<h4>The Draft Copies</h4>
+<br>
+<%if current_user%>
+  <%@draftforums = @user.forums.where(:status=>0)%>
+  <%@draftforums.each do |d|%>
+    <%=form_for d, :url=>forum_path(d), :method=>:patch, :class=>"form" do |f|%>
+    <%=f.label :topic, "Topic"%>
+    <%=f.text_field :topic, :class=>"form-control"%>
+    <%=f.label :body, "Content"%>
+    <%=f.text_area :body, :class=>"form-control"%>
+    <%= f.select :status, [["Draft",0],["Publish",1]], :class=>"form-control"%>
+    <%=f.submit "Publish"%>
+  <%end%>
+  <br>
+  <%end%>
+<%end%>
 

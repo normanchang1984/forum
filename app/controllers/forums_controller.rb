@@ -5,7 +5,7 @@ class ForumsController < ApplicationController
 
   def index
     @forums = Forum.all
-
+    @forums = @forums.where(:status=>1)
      if params[:order] == 'posts_count'
       order_by = "posts_count DESC"
     else
@@ -21,6 +21,8 @@ class ForumsController < ApplicationController
   def create
     @forum = Forum.new(forum_params)
     @forum.user = current_user
+
+
 
     if @forum.save
       flash[:notice]="Create Succeeded"
@@ -98,7 +100,7 @@ class ForumsController < ApplicationController
   end
 
   def forum_params
-    params.require(:forum).permit(:topic, :body, :user_id, :view_count, :category_ids=>[])
+    params.require(:forum).permit(:topic, :body, :user_id, :view_count, :status, :category_ids=>[])
   end
 
 end

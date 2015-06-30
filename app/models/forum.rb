@@ -16,4 +16,6 @@ class Forum < ActiveRecord::Base
     self.posts.map{|p| p.user.first_name}.uniq.join(" ")
   end
 
+
+
 end
