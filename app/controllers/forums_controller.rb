@@ -34,6 +34,9 @@ class ForumsController < ApplicationController
   end
 
   def update
+    if params[:_remove_photo]=="1"
+      @forum.photo = nil
+    end
     if @forum.update(forum_params)
       flash[:notice]="Update Succeeded"
       redirect_to forums_path
@@ -100,7 +103,7 @@ class ForumsController < ApplicationController
   end
 
   def forum_params
-    params.require(:forum).permit(:topic, :body, :user_id, :view_count, :status, :category_ids=>[])
+    params.require(:forum).permit(:topic, :body, :user_id, :view_count, :status, :photo, :category_ids=>[])
   end
 
 end

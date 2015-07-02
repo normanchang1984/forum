@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630110015) do
+ActiveRecord::Schema.define(version: 20150702031914) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -31,12 +31,16 @@ ActiveRecord::Schema.define(version: 20150630110015) do
     t.integer  "user_id"
     t.string   "topic"
     t.text     "body"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "category_id"
     t.integer  "posts_count"
-    t.integer  "view_count",  default: 0
+    t.integer  "view_count",         default: 0
     t.integer  "status"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "posts", force: :cascade do |t|

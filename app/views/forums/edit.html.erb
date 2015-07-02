@@ -5,5 +5,13 @@
 <%=f.text_field :topic, :class=>"form-control"%>
 <%=f.label :body, "Content"%>
 <%=f.text_area :body, :class=>"form-control"%>
+<% if @forum.photo.exists?%>
+  <%= image_tag(@forum.photo.url(:medium))%>
+  <br>
+  <br>
+  <%= check_box_tag "_remove_photo", "1"%> Remove photo
+  <br>
+  <br>
+<%end%>
 <%=f.submit "Update"%>
 <%end%>

@@ -8,6 +8,10 @@
 <br>
 <h3><%=@forum.body%></h3>
 <br>
+<% if @forum.photo.exists?%>
+  <%= image_tag(@forum.photo.url(:medium))%>
+<%end%>
+<br>
 <br>
 <%if params[:p_id] %>
   <%=link_to "Back to Main", forums_path, :class=>"btn btn-primary"%>

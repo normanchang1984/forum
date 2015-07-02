@@ -71,6 +71,10 @@
 <%=f.text_field :topic, :class=>"form-control"%>
 <%=f.label :body, "Content"%>
 <%=f.text_area :body, :class=>"form-control"%>
+<br>
+<%= f.file_field :photo %>
+<%=check_box_tag "_remove_photo","1"%>Remove Photo
+<br>
 <div class="form-group">
 <%#= f.label :category_id, "Category" %>
 <%#= f.select :category_id, [["Basketball", 1], ["Baseball", 2], ["Tennis", 3]], :class=>"form-control" %>

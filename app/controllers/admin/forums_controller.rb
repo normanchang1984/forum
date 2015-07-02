@@ -9,6 +9,7 @@ class Admin::ForumsController < ApplicationController
 
 
 
+
     protected
 
     def authenticate
