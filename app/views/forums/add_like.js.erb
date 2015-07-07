@@ -1,0 +1,14 @@
+
+<%if @like %>
+  $('#likefunc').html("<%= j link_to("Unlike", remove_like_forum_path(@forum), :method => :post, :remote => true, :class=>"btn btn-primary") %>")
+<%else%>
+  $('#likefunc').html("<%= j link_to "Like", add_like_forum_path(@forum), :method => :post, :remote => true, :class=>"btn btn-primary", :id=>"likebutton" %>")
+<%end%>
+
+<%# users = '' %>
+ <%#@forum.likeusers.each do |y|%>
+ <%# users += (link_to y.first_name, profile_path(y)) + ' '%>
+ <%#end%>
+ <% users = @forum.likeusers.map{|lu| (link_to lu.first_name, profile_path(lu))}.join(' ')%>
+<%@likecounts = @forum.likings.count%>
+$('#likecount').html('Like Count <%=@likecounts%> <%= raw users %>')

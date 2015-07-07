@@ -20,13 +20,29 @@
   <%=link_to "Back to Main", forums_path, :class=>"btn btn-primary"%>
 <%end%>
 
-
+<span id="favfunc">
 <% if @fav %>
-  <%= link_to "Remove Fav", remove_favorite_forum_path(@forum), :method => :post, :class=>"btn btn-primary"%>
+  <%= link_to "Remove Fav", remove_favorite_forum_path(@forum), :method => :post, :remote => true, :class=>"btn btn-primary"%>
 <% else %>
-  <%= link_to "Fav", add_favorite_forum_path(@forum), :method => :post, :class=>"btn btn-primary"%>
+  <%= link_to "Fav", add_favorite_forum_path(@forum), :method => :post, :remote => true,:class=>"btn btn-primary"%>
 <% end %>
+</span>
 
+<span id="likefunc">
+<% if @like %>
+
+  <%= link_to "Unlike", remove_like_forum_path(@forum), :method => :post, :remote => true, :class=>"btn btn-primary " %>
+<% else %>
+  <%= link_to "Like", add_like_forum_path(@forum), :method => :post, :remote => true, :class=>"btn btn-primary" %>
+
+<% end %>
+</span>
+
+<p id="likecount">Like Count <%=@likecounts%>,
+ <%@forum.users.each do |y|%>
+ <%=link_to y.first_name, profile_path(y)%>
+ <%end%>
+ </p>
 <br>
 <br>
 <table class="table">
@@ -39,14 +55,15 @@
   </th>
 </tr>
 <%@posts.each do |g|%>
-<tr>
+<tr id="post-<%g.id%>">
   <td>
-      <h4><%=g.content%></h4>
+    <h4><%=g.content%></h4>
+
   </td>
   <td>
     <%if current_user == g.user %>
       <%=link_to "Update", forum_path(@forum, :p_id=>g.id), :class=>"btn btn-primary"%>
-      <%=link_to "Delete", forum_post_path(@forum, g), :method=>:delete, :class=>"btn btn-danger"%>
+      <%=link_to "Delete", forum_post_path(@forum, g), :method=>:delete, :remote=>true, :class=>"btn btn-danger"%>
     <%end%>
   </td>
 </tr>

@@ -1,0 +1,5 @@
+<% if @fav %>
+  $('#favfunc').html('<%= j link_to "Remove Fav", remove_favorite_forum_path(@forum), :method => :post, :remote => true, :class=>"btn btn-primary"%>')
+<% else %>
+  $('#favfunc').html('<%= j link_to "Fav", add_favorite_forum_path(@forum), :method => :post, :remote => true, :class=>"btn btn-primary"%>')
+<% end %>

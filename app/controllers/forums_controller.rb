@@ -57,8 +57,9 @@ class ForumsController < ApplicationController
 
   def show
 
-    @forum = Forum.find(params[:id])
+    @forum = Forum.find_by_topic(params[:id])
     @fav = current_user.userforumships.find_by_forum_id( params[:id] )
+    @like = current_user.likings.find_by_forum_id (params[:id])
 
     if params[:p_id]
       @post = Post.find(params[:p_id])
@@ -69,23 +70,33 @@ class ForumsController < ApplicationController
     @posts=@forum.posts
 
     @forum.increment!(:view_count)
+    @likecounts = @forum.likings.count
 
   end
 
   def add_favorite
-    @fav = current_user.userforumships.find_by_forum_id( params[:id] )
-    unless @fav
-      current_user.userforumships.create( :forum_id => params[:id] )
-    end
+    @forum = Forum.find_by_topic(params[:id])
+    @fav = current_user.userforumships.create( :forum_id => params[:id] )
 
-    redirect_to :back
+    respond_to do |format|
+      format.html {
+        redirect_to forum_path(@forum)
+      }
+      format.js
+    end
   end
 
   def remove_favorite
+    @forum = Forum.find_by_topic(params[:id])
     @fav = current_user.userforumships.find_by_forum_id( params[:id] )
     @fav.destroy
-
-    redirect_to :back
+    @fav = nil
+    respond_to do |format|
+      format.html {
+        redirect_to forum_path(@forum)
+      }
+      format.js {render 'add_favorite'}
+      end
   end
 
   def latest
@@ -94,12 +105,49 @@ class ForumsController < ApplicationController
     @posts= Post.all
   end
 
+  def add_like
+    @forum = Forum.find_by_topic(params[:id])
+
+    @like = Liking.new
+    @like.forum_id = params[:id]
+    @like.user_id = current_user.id
+    @like.save
+    respond_to do |format|
+      format.html {
+        redirect_to forum_path(@forum)
+      }
+      format.js
+    end
+
+  end
+
+  def remove_like
+    @forum = Forum.find_by_topic(params[:id])
+
+    @like =current_user.likings.find_by_forum_id(params[:id])
+    @like.destroy
+
+    @like = nil
+
+    respond_to do |format|
+      format.html {
+        redirect_to :back
+      }
+      format.js {
+        render :action => :add_like
+      }
+    end
+
+  end
+
+
+
 
 
   protected
 
   def find_forum
-    @forum = current_user.forums.find(params[:id])
+    @forum = current_user.forums.find_by_topic(params[:id])
   end
 
   def forum_params

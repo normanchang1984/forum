@@ -51,6 +51,18 @@
 </table>
 <br>
 <br>
+<table class="table">
+  <tr>
+    <th>Liked Forums</th>
+  </tr>
+  <%@user.forums.each do |a|%>
+  <tr>
+    <td><%= link_to a.topic, forum_path(a) %></td>
+  </tr>
+  <%end%>
+</table>
+<br>
+<br>
 <h4>The Draft Copies</h4>
 <br>
 <%if current_user%>

@@ -18,9 +18,13 @@ end
 def destroy
   @post = current_user.posts.find(params[:id])
   @post.destroy
-
-  flash[:alert]="Delete Succeeded"
-  redirect_to forum_path(@forum)
+  respond_to do |format|
+      format.html {
+        flash[:alert]="Delete Succeeded"
+        redirect_to forum_path(@forum)
+      }
+      format.js
+  end
 end
 
 def update
